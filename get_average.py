@@ -5,20 +5,7 @@ from os.path import dirname, join
 import nibabel as nib
 import numpy as np
 
-
-def get_windowed_slice(slice_data, level=None, width=None):
-    if level is None or width is None:
-        window_lower_bound = np.min(slice_data)
-        window_upper_bound = np.max(slice_data)
-    else:
-        window_lower_bound = level - width // 2
-        window_upper_bound = level + width // 2
-
-    slice_data = np.clip(slice_data, window_lower_bound, window_upper_bound)
-    slice_data = ((slice_data - window_lower_bound) / (window_upper_bound - window_lower_bound)) * 255
-    slice_data = slice_data.astype(np.uint8)
-
-    return slice_data
+from windowing import get_windowed_slice
 
 
 def get_mean_and_std_of_volume(volume_path):
@@ -49,7 +36,7 @@ def get_mean_and_std_of_volume(volume_path):
 
 
 if __name__ == "__main__":
-    for filename in listdir(dirname(__file__)):
+    for filename in listdir(join(dirname(__file__), "data")):
         if not filename.endswith(".nii.gz"):
             continue
 
