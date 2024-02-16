@@ -6,6 +6,8 @@ import numpy as np
 
 from windowing import get_windowed_slice
 
+FILE_NAME = ""
+
 
 class VolumeDisplayer:
     def __init__(self, volume_path):
@@ -52,7 +54,10 @@ class VolumeDisplayer:
 
 
 if __name__ == "__main__":
-    filename = "106272387_chest_cropped.nii.gz"
-    file_path = join(dirname(__file__), "data", filename)
+    if FILE_NAME == "":
+        print("Please provide a file name to view.")
+        exit(1)
+    
+    file_path = join(dirname(__file__), "data", FILE_NAME)
 
     volume_displayer = VolumeDisplayer(file_path)
